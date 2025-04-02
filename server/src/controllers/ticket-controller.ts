@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request,  Response } from 'express';
 import { Ticket } from '../models/ticket.js';
 import { User } from '../models/user.js';
 
@@ -14,7 +14,10 @@ export const getAllTickets = async (_req: Request, res: Response) => {
         },
       ],
     });
-    res.json(tickets);
+    if (tickets) {
+      res.json(tickets);
+    } else {
+      res.status(404).json({ message: 'Ticket not found' });}
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }

@@ -16,6 +16,7 @@ const Board = () => {
   const [error, setError] = useState(false);
   const [loginCheck, setLoginCheck] = useState(false);
 
+
   const checkLogin = () => {
     if(auth.loggedIn()) {
       setLoginCheck(true);
