@@ -12,6 +12,7 @@ const retrieveUsers = async () => {
 
     if(!response.ok) {
       throw new Error('invalid user API response, check network tab!');
+      
     }
 
     return data;

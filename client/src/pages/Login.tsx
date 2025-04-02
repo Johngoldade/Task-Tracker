@@ -8,6 +8,7 @@ const Login = () => {
     username: '',
     password: ''
   });
+  const [isData, setIsData] = useState(true)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -21,6 +22,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const data = await login(loginData);
+      data ? setIsData(true) : setIsData(false)
       Auth.login(data.token);
     } catch (err) {
       console.error('Failed to login', err);
@@ -46,6 +48,9 @@ const Login = () => {
           onChange={handleChange}
         />
         <button type='submit'>Submit Form</button>
+        <div>
+          { isData ? <h4></h4> : <h4>Invalid Credentials! Please check your username or password and try again.</h4>}
+        </div>
       </form>
     </div>
     
