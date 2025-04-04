@@ -1,10 +1,14 @@
+// Import needed functions and hooks
 import { useState, useEffect, FormEvent, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createTicket } from '../api/ticketAPI';
 import { TicketData } from '../interfaces/TicketData';
 import { UserData } from '../interfaces/UserData';
 import { retrieveUsers } from '../api/userAPI'
+import auth from '../utils/auth';
 
+
+// Create ticket page component
 const CreateTicket = () => {
   const [newTicket, setNewTicket] = useState<TicketData | undefined>(
     {
@@ -16,8 +20,33 @@ const CreateTicket = () => {
       assignedUser: null
     }
   );
+  const [loginCheck, setLoginCheck] = useState(false);
+  
+  // Check if token has expired every 1s and if it has, log the user out
+  if (loginCheck) {
+    setInterval(() => {
+      const token = auth.getToken()
+      const expired = auth.isTokenExpired(token)
+      if (expired) {
+        setLoginCheck(false)
+        auth.logout()
+      }
+    }, 1000)
+  }
+  
+  // Function to check if the user is logged in
+  const checkLogin = () => {
+    if(auth.loggedIn()) {
+      setLoginCheck(true);
+    }
+  };
 
+  // Check if the user is logged in when the page first mounts  
+  useEffect(() => {
+    checkLogin();
+  }, []);
 
+  // Functionality to create a ticket
   const navigate = useNavigate();
 
   const [users, setUsers] = useState<UserData[] | undefined>([]);
@@ -58,7 +87,7 @@ const CreateTicket = () => {
     const { name, value } = e.target;
     setNewTicket((prev) => (prev ? { ...prev, [name]: value } : undefined));
   }
-
+  // Return HTML for the ticket component
   return (
     <>
       <div className='container'>
@@ -119,4 +148,5 @@ const CreateTicket = () => {
   )
 };
 
+// export create ticket component
 export default CreateTicket;
