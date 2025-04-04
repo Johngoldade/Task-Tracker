@@ -20,7 +20,7 @@ export const login = async (req: Request, res: Response) => {
     } else {
       console.log(process.env.JWT_SECRET_KEY)
       const jwtSecretKey = process.env.JWT_SECRET_KEY || ''
-      const userToken = jwt.sign({ username }, jwtSecretKey, { expiresIn: 60 })
+      const userToken = jwt.sign({ username }, jwtSecretKey, { expiresIn: '1h' })
       console.log(userToken)
       return res.json({ token: userToken })
     }
