@@ -4,9 +4,10 @@ import jwt from 'jsonwebtoken';
 interface JwtPayload {
   username: string;
 }
-// Grok AI
+
+// Grok AI helped me catch an error here where i was returning a header instead of just calling the next function
 export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
-  // TODO: verify the token exists and add the user data to the request object
+  // Verify the token exists and add the user data to the request object
   const authorization: string | undefined = req.headers.authorization
 
   if (!authorization) {

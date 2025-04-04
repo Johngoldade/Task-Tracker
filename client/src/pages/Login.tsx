@@ -1,15 +1,22 @@
+// React hooks and functions
 import { useState, FormEvent, ChangeEvent } from "react";
-
+// Import needed functions from other files
 import Auth from '../utils/auth';
 import { login } from "../api/authAPI";
 
+
+// Function to login
 const Login = () => {
+  // Set username and password to empty strings
   const [loginData, setLoginData] = useState({
     username: '',
     password: ''
   });
+  // Set data to true
   const [isData, setIsData] = useState(true)
 
+
+  // Add values to the username and password on an event action
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setLoginData({
@@ -18,6 +25,8 @@ const Login = () => {
     });
   };
 
+
+  // If login data is returned from the server, login and set the token to local storage
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
@@ -29,6 +38,8 @@ const Login = () => {
     }
   };
 
+
+  // Login page component HTML
   return (
     <div className='container'>
       <form className='form' onSubmit={handleSubmit}>
@@ -57,4 +68,5 @@ const Login = () => {
   )
 };
 
+// Export component
 export default Login;
